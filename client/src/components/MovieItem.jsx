@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import { 
+    Row, 
+    Col, 
+    Card,
+} from 'react-bootstrap';
 
 export const MovieItem = ({movie, handleMovieSelect}) => {
+
     return (
-        <div onClick={ () => handleMovieSelect(movie)} className=' movie-item item'>
-            <img className='ui image' src={movie.Poster} alt={movie.Title}/>
-            <div className='content'>
-                <div className='header'>{movie.Title}</div>
-                <div className='year'>{movie.Year}</div>
-                <div className='type'>{movie.Type}</div>
-            </div>
-        </div>
+        <Col onClick={ () => handleMovieSelect(movie)} style={{margin: '20px 0', cursor: 'pointer'}} lg={2}>
+            <Card>
+                <Card.Img alt={movie.Title} variant='top' src={movie.Poster === 'N/A' ? 'https://via.placeholder.com/150/000000/FFFFFF?text=No+Poster' : movie.Poster}/>
+                <Card.Body>
+                    <Card.Title>{movie.Title}</Card.Title>
+                    <Card.Subtitle>({movie.Year})</Card.Subtitle>
+                </Card.Body>
+            </Card>
+         </Col>
     )
 }

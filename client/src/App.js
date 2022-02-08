@@ -6,13 +6,15 @@ import { SearchBar } from './components/SearchBar';
 import { MovieList } from './components/MovieList';
 import { MovieDetails } from './components/MovieDetails';
 import { ReviewList } from './components/ReviewList';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row, Tabs, Tab, Spinner } from 'react-bootstrap';
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [error, setError] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [key, setKey] = useState('movies');
+  const [show, setShow] = useState(false);
   
   const handleSubmit = async (term) => {
     const response = await omdb.get('/', {
@@ -25,6 +27,7 @@ function App() {
           query: term,
       }
     })
+    
     console.log(nytResponse.data);
     console.log(response.data.Search);
     if (response.data.Response == "True") {
@@ -45,29 +48,33 @@ function App() {
           i: movie.imdbID,
       }
     })
+   
     console.log(response1.data);
+    setShow(true);
     setSelectedMovie(response1.data);
   }
 
+  const handleClose = () => setShow(false);
+
   return (
-    <Container>
+    <Container style={{padding: '35px'}}>
       <Row>
         <SearchBar handleFormSubmit={handleSubmit}/>
       </Row>
-      <Row>
-        {error && (<h3>{error.Error}</h3>)}
-      </Row>
-      <Row>
-        <Col>
-          <ReviewList reviews={reviews}/>
-        </Col>
-        <Col>
+      <Tabs
+        id="controlled-tab-example"
+        activeKey={key}
+        onSelect={(k) => setKey(k)}
+        className="mb-3">
+        <Tab eventKey="movies" title="Movies">
+          {error && (<h3>{error.Error}</h3>)}
           <MovieList handleMovieSelect={handleMovieSelect} movies={movies}/>
-        </Col>
-        <Col>
-          <MovieDetails movie={selectedMovie}/>
-        </Col>
-      </Row>
+        </Tab>
+        <Tab eventKey="reviews" title="Reviews">
+          {reviews === null ? <h3>No NYT reviews...</h3> : <ReviewList reviews={reviews}/>}
+        </Tab>
+      </Tabs>
+      {selectedMovie && <MovieDetails show={show} movie={selectedMovie} handleClose={handleClose}/>}
     </Container>
    
   )

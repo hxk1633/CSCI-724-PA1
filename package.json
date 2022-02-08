@@ -10,8 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.25.0",
     "express": "^4.17.2",
     "nodemon": "^2.0.15",
-    "soap": "^0.43.0"
+    "request": "^2.88.2",
+    "soap": "^0.43.0",
+    "tailwindcss": "^1.9.6"
   }
 }
