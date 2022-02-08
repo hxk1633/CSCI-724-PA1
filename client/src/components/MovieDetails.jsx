@@ -15,7 +15,7 @@ export const MovieDetails = ({movie, show, handleClose}) => {
                 <Container fluid>
                     <Row>
                         <Col lg={5}>
-                            <Image src={movie.Poster}/>
+                            <Image src={movie.Poster === 'N/A' ? 'https://via.placeholder.com/150/000000/FFFFFF?text=No+Poster' : movie.Poster}/>
                         </Col>
                         <Col>
                             <h2>{movie.Title}</h2>

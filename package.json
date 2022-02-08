@@ -4,6 +4,11 @@
   "description": "",
   "main": "soap.js",
   "scripts": {
+    "client-install": "cd client && npm install",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -11,10 +16,12 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.25.0",
+    "concurrently": "^7.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.2",
+    "http-proxy-middleware": "^2.0.3",
     "nodemon": "^2.0.15",
     "request": "^2.88.2",
-    "soap": "^0.43.0",
-    "tailwindcss": "^1.9.6"
+    "soap": "^0.43.0"
   }
 }

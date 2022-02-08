@@ -68,6 +68,10 @@ function App() {
   const handleClose = () => setShow(false);
 
   return (
+    <>
+    <div class="p-3 mb-2 bg-primary text-white text-center">
+      <h1>Movie Search Engine</h1>
+    </div>
     <Container style={{padding: '35px'}}>
       <Row>
         <SearchBar handleFormSubmit={handleSubmit}/>
@@ -76,7 +80,7 @@ function App() {
         id="controlled-tab-example"
         activeKey={key}
         onSelect={(k) => setKey(k)}
-        className="mb-3">
+        className="mb-3 mt-3">
         <Tab eventKey="movies" title="Movies">
           {loading ? <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -93,7 +97,7 @@ function App() {
       </Tabs>
       {selectedMovie && <MovieDetails show={show} movie={selectedMovie} handleClose={handleClose}/>}
     </Container>
-   
+   </>
   )
 }
 

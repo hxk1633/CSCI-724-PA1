@@ -19,8 +19,8 @@ export const SearchBar = (props) => {
             <Form onSubmit={handleSubmit}>
                 <InputGroup className="mb-3">
                     <FormControl
-                        placeholder="Enter movie name"
-                        aria-label="Enter movie name"
+                        placeholder="Search for a movie..."
+                        aria-label="Search for a movie..."
                         aria-describedby="basic-addon2"
                         onChange={handleChange} 
                         value={term}/>
