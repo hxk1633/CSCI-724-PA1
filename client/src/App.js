@@ -12,11 +12,16 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [error, setError] = useState(null);
+  const [errorReviews, setErrorReviews] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [key, setKey] = useState('movies');
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   const handleSubmit = async (term) => {
+    setError(null);
+    setErrorReviews(null);
+    setLoading(true);
     const response = await omdb.get('/', {
         params: {
             s: term,
@@ -38,8 +43,14 @@ function App() {
       setError(response.data);
     }
     if (nytResponse.data.status == "OK") {
-      setReviews(nytResponse.data.results);
+      if (nytResponse.data.results === null) {
+        setReviews([]);
+        setErrorReviews("No reviews...");
+      } else {
+        setReviews(nytResponse.data.results);
+      }
     }
+    setLoading(false);
   };
 
   const handleMovieSelect = async (movie) => {
@@ -67,11 +78,17 @@ function App() {
         onSelect={(k) => setKey(k)}
         className="mb-3">
         <Tab eventKey="movies" title="Movies">
+          {loading ? <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner> :
+          <MovieList handleMovieSelect={handleMovieSelect} movies={movies}/>}
           {error && (<h3>{error.Error}</h3>)}
-          <MovieList handleMovieSelect={handleMovieSelect} movies={movies}/>
         </Tab>
         <Tab eventKey="reviews" title="Reviews">
-          {reviews === null ? <h3>No NYT reviews...</h3> : <ReviewList reviews={reviews}/>}
+          {loading ? <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner> : <ReviewList reviews={reviews}/>}
+          {errorReviews && (<h3>{errorReviews}</h3>)}
         </Tab>
       </Tabs>
       {selectedMovie && <MovieDetails show={show} movie={selectedMovie} handleClose={handleClose}/>}

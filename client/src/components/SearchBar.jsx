@@ -24,7 +24,7 @@ export const SearchBar = (props) => {
                         aria-describedby="basic-addon2"
                         onChange={handleChange} 
                         value={term}/>
-                    <Button variant="dark" id="button-addon2">
+                    <Button id="button-addon2">
                         Search
                     </Button>
                 </InputGroup>
