@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Col, Form, InputGroup, Button, FormControl } from 'react-bootstrap';
 
 export const SearchBar = (props) => {
     const [term, setTerm] = useState("");
@@ -14,13 +15,20 @@ export const SearchBar = (props) => {
     }
 
     return (
-        <div className='search-bar ui segment'>
-            <form onSubmit={handleSubmit} className='ui form'>
-                <div className='field'>
-                    <label htmlFor="movie-search">Movie Search</label>
-                    <input onChange={handleChange} name='movie-search' type="text" value={term}/>
-                </div>
-            </form>
-        </div>
+        <Col span={10} offset={6}>
+            <Form onSubmit={handleSubmit}>
+                <InputGroup className="mb-3">
+                    <FormControl
+                        placeholder="Enter movie name"
+                        aria-label="Enter movie name"
+                        aria-describedby="basic-addon2"
+                        onChange={handleChange} 
+                        value={term}/>
+                    <Button variant="dark" id="button-addon2">
+                        Search
+                    </Button>
+                </InputGroup>
+            </Form>
+        </Col>
     )
 }
