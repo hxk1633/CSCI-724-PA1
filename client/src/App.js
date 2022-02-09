@@ -108,16 +108,16 @@ function App() {
         onSelect={(k) => setKey(k)}
         className="mb-3 mt-3">
         <Tab eventKey="movies" title="Movies">
-          {loading ? <Spinner animation="border" role="status">
+          {loading ? <div className="d-flex justify-content-center"><Spinner className="m-5" animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
-          </Spinner> :
+          </Spinner></div> :
           <MovieList handleMovieSelect={handleMovieSelect} movies={movies}/>}
           {error && (<h3>{error.Error}</h3>)}
         </Tab>
         <Tab eventKey="reviews" title="Reviews">
-          {loading ? <Spinner animation="border" role="status">
+          {loading ? <div className="d-flex justify-content-center"><Spinner className="m-5" animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
-          </Spinner> : <ReviewList reviews={reviews}/>}
+          </Spinner></div> : <ReviewList reviews={reviews}/>}
           {errorReviews && (<h3>{errorReviews}</h3>)}
         </Tab>
       </Tabs>

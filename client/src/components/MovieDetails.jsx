@@ -12,9 +12,9 @@ export const MovieDetails = ({movie, show, handleClose, flags, loading}) => {
             <Modal.Header closeButton>
                 <Modal.Title>Details</Modal.Title>
             </Modal.Header>
-            { loading ? <Spinner animation="border" role="status">
+            { loading ? <div className="d-flex justify-content-center"><Spinner className="m-5" animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
-          </Spinner> :
+          </Spinner></div>:
             <Modal.Body>
                 <Container fluid>
                     <Row>
