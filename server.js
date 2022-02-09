@@ -1,34 +1,27 @@
 const express = require('express');
 const soap = require('soap');
 const cors = require('cors');
-// const path = require('path')
-// const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const port = process.env.PORT || 3001;
 
-// module.exports = function(app) {
-//     app.use(
-//       '/api',
-//       createProxyMiddleware({
-//         target: 'http://localhost:3000',
-//         changeOrigin: true,
-//       })
-//     );
-// };
 
-// var url = 'http://www.SoapClient.com/xml/SQLDataSoap.WSDL';
-// var args = {SRLFile: 'xml/NEWS.SRI', RequestName: 'Google'};
-// soap.createClient(url, function(err, client) {
-//     client.ProcessSRL(args, function(err, result) {
-//         console.log(result);
-//     });
-// });
-
-// app.use(express.static(path.join(__dirname, './client/build')));
+const url = "http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL";
 
 app.get('/api/flag', cors(), (req, res) => {
-  res.send({hello: "world"});
+  let countryName = req.query.country;
+  console.log(countryName);
+  let ICOCode;
+  soap.createClient(url, function(err, client) {
+    client.CountryISOCode({sCountryName: countryName}, function(err, result) {
+      ICOCode = result.CountryISOCodeResult;
+      console.log(ICOCode);
+      client.CountryFlag({sCountryISOCode: ICOCode}, function(err, result) {
+        console.log(result.CountryFlagResult);
+        res.send(result.CountryFlagResult);
+    });
+    });
+  });
 })
 
 app.listen(port, () => {

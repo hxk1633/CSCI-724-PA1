@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './App.scss';
-import omdb from './rest-services/omdb';
-import nytreviews from './rest-services/nytreviews';
+import omdb from './services/omdb';
+import nytreviews from './services/nytreviews';
 import { SearchBar } from './components/SearchBar';
 import { MovieList } from './components/MovieList';
 import { MovieDetails } from './components/MovieDetails';
 import { ReviewList } from './components/ReviewList';
-import { Container, Col, Row, Tabs, Tab, Spinner } from 'react-bootstrap';
+import { Container, Row, Tabs, Tab, Spinner } from 'react-bootstrap';
+import axios from 'axios';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -35,14 +36,14 @@ function App() {
     
     console.log(nytResponse.data);
     console.log(response.data.Search);
-    if (response.data.Response == "True") {
+    if (response.data.Response === "True") {
       setError(null);
       setMovies(response.data.Search);
     } else {
       setMovies([]);
       setError(response.data);
     }
-    if (nytResponse.data.status == "OK") {
+    if (nytResponse.data.status === "OK") {
       if (nytResponse.data.results === null) {
         setReviews([]);
         setErrorReviews("No reviews...");
@@ -54,22 +55,29 @@ function App() {
   };
 
   const handleMovieSelect = async (movie) => {
-    const response1 = await omdb.get('/', {
+    const response = await omdb.get('/', {
       params: {
           i: movie.imdbID,
       }
     })
+
+    const countryResponse = await axios.get('/api/flag', {
+      params: {
+        country: response.data.Country
+      }
+    })
    
-    console.log(response1.data);
+    console.log("Country Response: " + JSON.stringify(countryResponse));
+    console.log(response.data);
     setShow(true);
-    setSelectedMovie(response1.data);
+    setSelectedMovie(response.data);
   }
 
   const handleClose = () => setShow(false);
 
   return (
     <>
-    <div class="p-3 mb-2 bg-primary text-white text-center">
+    <div className="p-3 mb-2 bg-primary text-white text-center">
       <h1>Movie Search Engine</h1>
     </div>
     <Container style={{padding: '35px'}}>
