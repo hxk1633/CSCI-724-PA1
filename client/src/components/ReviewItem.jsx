@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Col } from 'react-bootstrap';
+import { Card, Col, Badge } from 'react-bootstrap';
 
 
 export const ReviewItem = ({review}) => {
@@ -11,7 +11,7 @@ export const ReviewItem = ({review}) => {
             <Card onClick={handleClick}>
                 <Card.Img variant="top" src={review.multimedia === null ? 'https://via.placeholder.com/150/000000/FFFFFF?text=No+Image' : review.multimedia.src}/>
                 <Card.Body>
-                    <Card.Subtitle className="mb-2 text-muted">{review["display_title"]} {review["mpaa_rating"]}</Card.Subtitle>
+                    <Card.Subtitle className="mb-2 text-muted">{review["display_title"]} <Badge bg="info">{review["mpaa_rating"]}</Badge></Card.Subtitle>
                     <Card.Title>{review.headline}</Card.Title>
                     {review["critics_pick"] === 1 ? <Card.Subtitle className="mb-2">Critics' Pick</Card.Subtitle> : null}
                     <Card.Text>

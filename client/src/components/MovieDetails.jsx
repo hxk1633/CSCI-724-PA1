@@ -1,16 +1,20 @@
 import React from 'react';
-import { Modal, Button, Container, Col, Row, Image, Badge } from 'react-bootstrap';
+import { Modal, Button, Container, Col, Row, Image, Badge, Spinner } from 'react-bootstrap';
 
-export const MovieDetails = ({movie, show, handleClose}) => {
-    // if (!movie) {
-    //     return <div>Loading ...</div>;
-    // }
+export const MovieDetails = ({movie, show, handleClose, flags, loading}) => {
+    
+    const renderedFlags =  flags.map((flag) => {
+        return <Image src={flag} src={flag.name === 'Soviet Union' ? 'https://via.placeholder.com/400x250/FF0000/000000/?text=Soviet+Union+Not+Found' : flag.image} height="40" style={{marginRight: '15px'}}/>
+    });
 
     return (
         <Modal show={show} onHide={handleClose} size='lg'>
             <Modal.Header closeButton>
                 <Modal.Title>Details</Modal.Title>
             </Modal.Header>
+            { loading ? <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner> :
             <Modal.Body>
                 <Container fluid>
                     <Row>
@@ -20,19 +24,15 @@ export const MovieDetails = ({movie, show, handleClose}) => {
                         <Col>
                             <h2>{movie.Title}</h2>
                             <Badge bg="info">{movie.Rated}</Badge> <Badge bg="info">{movie.Runtime}</Badge> <Badge bg="info">{movie.Genre}</Badge>
-                            <p style={{marginTop: 20}}>{movie.Plot}</p>
+                            <div className='mt-3'>
+                                {renderedFlags}
+                                <h6 className='text-muted mt-2'>{movie.Country}</h6>
+                            </div>
+                            <p className="lead">{movie.Plot}</p>
                         </Col>
                     </Row>
                 </Container>
-                {/* <h3>Released: {movie.Released}</h3>
-                <h3>Director: {movie.Director}</h3>
-                <h3>Writer: {movie.Writer}</h3>
-                <h3>Actors: {movie.Actors}</h3>
-                <p>Plot: {movie.Plot}</p>
-                <h5>Language: {movie.Language}</h5>
-                <h5>Country: {movie.Country}</h5>
-                <h5>Awards: {movie.Awards}</h5> */}
-            </Modal.Body>
+            </Modal.Body>}
             <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
                 Close

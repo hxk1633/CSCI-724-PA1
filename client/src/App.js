@@ -11,13 +11,15 @@ import axios from 'axios';
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState({});
   const [error, setError] = useState(null);
   const [errorReviews, setErrorReviews] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [key, setKey] = useState('movies');
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+  const [countryFlags, setCountryFlags] = useState([]);
   
   const handleSubmit = async (term) => {
     setError(null);
@@ -55,22 +57,38 @@ function App() {
   };
 
   const handleMovieSelect = async (movie) => {
+    setLoadingDetails(true);
+    setShow(true);
+
+    let countries = "";
+    let responseArray = [];
+
     const response = await omdb.get('/', {
       params: {
           i: movie.imdbID,
       }
     })
 
-    const countryResponse = await axios.get('/api/flag', {
-      params: {
-        country: response.data.Country
-      }
-    })
+    if (response.data.Country.includes("USA")) {
+      countries = response.data.Country.replace("USA", "United States").split(',');
+    } else {
+      countries = response.data.Country.split(',');
+    }
+
+    for (var i = 0; i < countries.length; i++) {
+      let countryResponse = await axios.get('/api/flag', {
+        params: {
+          country: countries[i].trim()
+        }
+      })
+      responseArray.push({name: countries[i].trim(), image: countryResponse.data});
+    }
    
-    console.log("Country Response: " + JSON.stringify(countryResponse));
+    console.log("Country Response Array: " + JSON.stringify(responseArray));
     console.log(response.data);
-    setShow(true);
     setSelectedMovie(response.data);
+    setCountryFlags(responseArray);
+    setLoadingDetails(false);
   }
 
   const handleClose = () => setShow(false);
@@ -103,7 +121,7 @@ function App() {
           {errorReviews && (<h3>{errorReviews}</h3>)}
         </Tab>
       </Tabs>
-      {selectedMovie && <MovieDetails show={show} movie={selectedMovie} handleClose={handleClose}/>}
+      <MovieDetails show={show} movie={selectedMovie} flags={countryFlags} handleClose={handleClose} loading={loadingDetails}/>
     </Container>
    </>
   )
