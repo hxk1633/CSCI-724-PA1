@@ -33,7 +33,7 @@ Dependencies for the client and server need to be installed separately:
 
 # Project start
 
-The client and server both need to be running for the applicaiton to work properly:
+The client and server both need to be running for the application to work properly:
 
 ### `npm start`
 ### `cd client && npm start`
