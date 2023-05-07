@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const app = express();
 console.log("PORT: " + process.env.PORT);
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8080;
 
 
 const url = "http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL";
