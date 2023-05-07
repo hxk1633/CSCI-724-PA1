@@ -26,5 +26,5 @@ A user can also click on the "Reviews" tab to see a list of NYT movie reviews. E
 
 # Project setup
 
-docker-compose up --build
+`docker-compose up --build`
 
