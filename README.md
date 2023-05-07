@@ -26,15 +26,5 @@ A user can also click on the "Reviews" tab to see a list of NYT movie reviews. E
 
 # Project setup
 
-Dependencies for the client and server need to be installed separately:
-
-### `npm install`
-### `cd client && npm install`
-
-# Project start
-
-The client and server both need to be running for the application to work properly:
-
-### `npm start`
-### `cd client && npm start`
+docker-compose up --build
 
