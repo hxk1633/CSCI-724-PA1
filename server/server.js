@@ -4,12 +4,17 @@ const cors = require('cors');
 
 const app = express();
 console.log("PORT: " + process.env.PORT);
-const port = process.env.PORT || 8080;
-
+const port = process.env.PORT || 3001;
+app.use(cors())
 
 const url = "http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL";
 
-app.get('/api/flag', cors(), (req, res) => {
+
+app.get('/', (req, res) => {
+  res.send('Hi There')
+});
+
+app.get('/flag', (req, res) => {
   let countryName = req.query.country;
   console.log(countryName);
   let ICOCode;
