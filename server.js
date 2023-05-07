@@ -3,6 +3,7 @@ const soap = require('soap');
 const cors = require('cors');
 
 const app = express();
+console.log("PORT: " + process.env.PORT);
 const port = process.env.PORT || 3001;
 
 
