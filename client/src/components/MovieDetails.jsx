@@ -4,7 +4,7 @@ import { Modal, Button, Container, Col, Row, Image, Badge, Spinner } from 'react
 export const MovieDetails = ({movie, show, handleClose, flags, loading}) => {
     
     const renderedFlags =  flags.map((flag) => {
-        return <Image src={flag} src={flag.name === 'Soviet Union' ? 'https://via.placeholder.com/400x250/FF0000/000000/?text=Soviet+Union+Not+Found' : flag.image} height="40" style={{marginRight: '15px'}}/>
+        return <Image src={flag.name === 'Soviet Union' ? 'https://via.placeholder.com/400x250/FF0000/000000/?text=Soviet+Union+Not+Found' : flag.image} height="40" style={{marginRight: '15px'}}/>
     });
 
     return (
